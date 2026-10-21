@@ -70,12 +70,29 @@ infra/                 # docker-compose 与部署脚本
 
 ## 本地运行
 
+需要 Python 3.12（用 [uv](https://docs.astral.sh/uv/) 管理依赖）、Node 24 和 Docker。
+
 ```bash
 cp .env.example .env
-docker compose up -d
+uv sync --all-packages
+docker compose up -d --build
+
+curl http://localhost:8000/health    # ai-api
+curl http://localhost:8001/health    # enterprise-sim
 ```
 
-> 具体命令以 Week 1 提交为准，本节随代码同步更新。
+Windows 上首次拉取基础镜像需要走镜像源，见 [`scripts/README.md`](scripts/README.md)。
+
+### 常用命令
+
+| 目的 | 命令 |
+|---|---|
+| 跑测试 | `uv run --all-packages pytest` |
+| 只跑已实现的测试 | `uv run --all-packages pytest services packages/shared` |
+| 代码检查 | `uv run ruff check .` |
+| 格式化 | `uv run ruff format .` |
+| 起容器 | `docker compose up -d --build` |
+| 看日志 | `docker compose logs -f ai-api` |
 
 ## License
 
