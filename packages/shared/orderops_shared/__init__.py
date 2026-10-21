@@ -1,0 +1,83 @@
+"""Shared domain models, enums and tool contracts for orderops-agent.
+
+This package is imported by both `ai-api` (agent, knowledge base, evaluation)
+and `enterprise-sim` (the simulated OMS / payment / inventory / warehouse /
+logistics systems). Keeping the vocabulary in one place is what makes the tool
+contracts type-checked on both sides of the boundary.
+"""
+
+from orderops_shared.enums import (
+    AnomalyFamily,
+    Channel,
+    DiagnosisVerdict,
+    EventType,
+    LabelStatus,
+    LockStatus,
+    LogLevel,
+    OrderStatus,
+    PaymentEventType,
+    PaymentStatus,
+    RootCauseCode,
+    Severity,
+    TaskStatus,
+    ToolErrorCode,
+)
+from orderops_shared.models import (
+    Action,
+    Case,
+    Citation,
+    Diagnosis,
+    EvidenceRef,
+    Impact,
+    InventoryLock,
+    LogisticsEvent,
+    LogLine,
+    Order,
+    OrderEvent,
+    OrderItem,
+    Payment,
+    PaymentEvent,
+    Recommendation,
+    RootCause,
+    Shipment,
+    SlaClause,
+    SlaPolicy,
+    WarehouseTask,
+)
+
+__all__ = [
+    "Action",
+    "AnomalyFamily",
+    "Case",
+    "Channel",
+    "Citation",
+    "Diagnosis",
+    "DiagnosisVerdict",
+    "EventType",
+    "EvidenceRef",
+    "Impact",
+    "InventoryLock",
+    "LabelStatus",
+    "LockStatus",
+    "LogLevel",
+    "LogLine",
+    "LogisticsEvent",
+    "Order",
+    "OrderEvent",
+    "OrderItem",
+    "OrderStatus",
+    "Payment",
+    "PaymentEvent",
+    "PaymentEventType",
+    "PaymentStatus",
+    "Recommendation",
+    "RootCause",
+    "RootCauseCode",
+    "Severity",
+    "Shipment",
+    "SlaClause",
+    "SlaPolicy",
+    "TaskStatus",
+    "ToolErrorCode",
+    "WarehouseTask",
+]

@@ -1,0 +1,55 @@
+# Local development stack.
+#
+# postgres runs the pgvector image so the knowledge base can live in the same
+# database as the structured order data. The two API services are built from
+# the repo root so that the `packages/shared` workspace member is available
+# inside the image.
+
+name: orderops
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: orderops
+      POSTGRES_PASSWORD: orderops
+      POSTGRES_DB: orderops
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U orderops -d orderops"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+  enterprise-sim:
+    build:
+      context: .
+      dockerfile: services/enterprise-sim/Dockerfile
+    environment:
+      DATABASE_URL: postgresql+psycopg://orderops:orderops@postgres:5432/orderops
+    ports:
+      - "8001:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  ai-api:
+    build:
+      context: .
+      dockerfile: services/ai-api/Dockerfile
+    environment:
+      DATABASE_URL: postgresql+psycopg://orderops:orderops@postgres:5432/orderops
+      ENTERPRISE_SIM_URL: http://enterprise-sim:8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      enterprise-sim:
+        condition: service_started
+
+volumes:
+  pgdata:

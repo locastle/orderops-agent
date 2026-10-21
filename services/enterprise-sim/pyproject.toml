@@ -1,0 +1,24 @@
+[project]
+name = "orderops-enterprise-sim"
+version = "0.1.0"
+description = "Read-only simulation of OMS, payment, inventory, warehouse, logistics and log services"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "orderops-shared",
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "pydantic-settings>=2.6",
+]
+
+[project.scripts]
+enterprise-sim = "app.main:run"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
+[tool.uv.sources]
+orderops-shared = { workspace = true }

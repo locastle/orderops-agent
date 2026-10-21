@@ -1,0 +1,42 @@
+[project]
+name = "orderops-workspace"
+version = "0.1.0"
+description = "Order anomaly diagnosis agent: tool-calling state machine, hybrid RAG, evaluation harness"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = ["orderops-shared"]
+
+[tool.uv.workspace]
+members = ["packages/*", "services/*"]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+orderops-shared = { workspace = true }
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "pytest-asyncio>=0.24",
+    "httpx>=0.27",
+    "ruff>=0.8",
+    "mypy>=1.13",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["services/*/tests"]
+pythonpath = ["packages/shared"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+packages = ["orderops_shared"]

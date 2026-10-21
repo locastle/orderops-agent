@@ -1,0 +1,25 @@
+[project]
+name = "orderops-ai-api"
+version = "0.1.0"
+description = "Agent orchestration, knowledge base, LLM provider layer and evaluation harness"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "orderops-shared",
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "pydantic-settings>=2.6",
+    "httpx>=0.27",
+]
+
+[project.scripts]
+ai-api = "app.main:run"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
+[tool.uv.sources]
+orderops-shared = { workspace = true }
