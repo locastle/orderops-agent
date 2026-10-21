@@ -7,6 +7,7 @@ members = [
     "orderops-ai-api",
     "orderops-enterprise-sim",
     "orderops-shared",
+    "orderops-synthetic",
     "orderops-workspace",
 ]
 
@@ -321,6 +322,21 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [{ name = "pydantic", specifier = ">=2.9" }]
+
+[[package]]
+name = "orderops-synthetic"
+version = "0.1.0"
+source = { editable = "packages/synthetic" }
+dependencies = [
+    { name = "orderops-shared" },
+    { name = "pydantic" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "orderops-shared", editable = "packages/shared" },
+    { name = "pydantic", specifier = ">=2.9" },
+]
 
 [[package]]
 name = "orderops-workspace"
